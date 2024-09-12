@@ -1,0 +1,61 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450" Width="600"
+        x:Class="Demo2.HistoryWindow"
+		x:CompileBindings="False"
+        Title="HistoryWindow">
+	<Grid RowDefinitions="Auto,*"
+		  ColumnDefinitions="*,*">
+			<StackPanel Name="ProductPanel"
+						Grid.Column="0"
+						Grid.Row="1"
+						Margin="10"
+						Spacing="10">
+				<Image Source="{Binding Image}" HorizontalAlignment="Center" Height="270"/>
+				
+				<TextBlock Text="{Binding Title}" TextWrapping="Wrap"/>
+				
+				<TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
+				
+				<TextBlock Text="{Binding Cost}"/>
+
+				<TextBlock Text="{Binding IsEnable}"/>
+			</StackPanel>
+
+		<ComboBox Name="ProductComboBox" 
+				  Grid.Row="0" 
+				  Grid.Column="1" 
+				  Margin="10"
+				  HorizontalAlignment="Stretch"
+				  SelectionChanged="ComboBox_SelectionChanged">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Title}" TextWrapping="Wrap"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+
+		<ListBox Name="SaleListBox"
+				 Grid.Row="1" 
+				 Grid.Column="1" 
+				 Margin="10">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel>
+						<TextBlock Text="{Binding Saledate, StringFormat='Дата продажи: {0}'}"/>
+						<TextBlock Text="{Binding Quantity, StringFormat='Количество: {0}'}"/>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button Content="Назад"
+				Grid.Row="1"
+				Grid.Column="0" 
+				VerticalAlignment="Bottom"
+				Margin="10"
+				Click="Button_Click"/>
+	</Grid>
+</Window>

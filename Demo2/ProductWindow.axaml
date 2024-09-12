@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Demo2.ProductWindow"
+		x:CompileBindings="False"
+        Title="ProductWindow">
+	<Grid RowDefinitions="*,*,*"
+		  ColumnDefinitions="*,*,*">
+		<StackPanel Spacing="10" Margin="10" Name="ProductPanel">
+			<TextBlock Text="{Binding Id}"/>
+			<TextBox Text="{Binding Title}" Watermark="Название"/>
+			<TextBox Text="{Binding Cost}" Watermark="Цена"/>
+			<TextBox Text="{Binding Description}" Watermark="Описание"/>
+			<CheckBox Content="В наличии" IsChecked="{Binding Isactive}"/>
+			<ComboBox Name="ManufComboBox"
+					  SelectedItem="{Binding Manufacturer}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Name}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<Image Source="{Binding Image}" Height="150" HorizontalAlignment="Left"  Name="Image" />
+			<Button Content="Добавить фото" Click="Button_Click_AddPhoto"/>
+		</StackPanel>
+		
+		<ListBox Name="AttachedListBox"
+				 Grid.Row="1"
+				 Grid.Column="2">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Title}"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</Window>

@@ -73,5 +73,26 @@ namespace Demo2
         private void TextBox_TextChanged(object? sender, Avalonia.Controls.TextChangedEventArgs e) => InitList();
 
         private void ComboBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e) => InitList();
+
+        private void Button_Click_History(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            HistoryWindow historyWindow = new HistoryWindow((Product)ProductsListBox.SelectedItem!);
+            historyWindow.Show();
+            Close();
+        }
+
+        private void Button_Click_Add(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            ProductWindow productWindow = new ProductWindow();  
+            productWindow.Show();
+            Close();
+        }
+
+        private void Button_Click_Edit(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            ProductWindow productWindow = new ProductWindow((Product)ProductsListBox.SelectedItem!);
+            productWindow.Show();
+            Close();
+        }
     }
 }

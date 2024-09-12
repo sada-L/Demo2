@@ -2,6 +2,7 @@
 using Avalonia.Media.Imaging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 
 namespace Demo2.Models;
@@ -28,7 +29,7 @@ public partial class Product
 
     public SolidColorBrush Color => Isactive ? new SolidColorBrush(Colors.Gray) : new SolidColorBrush(Colors.White);
 
-    public int AttachedCount => Attachedproducts.Count;
+    public int AttachedCount => Attachedproducts.Count; 
 
     public virtual Manufacturer? Manufacturer { get; set; }
 
