@@ -12,19 +12,25 @@ public partial class Product
 
     public string Title { get; set; } = null!;
 
-    public string? Description { get; set; }
-
     public decimal Cost { get; set; }
+
+    public string? Description { get; set; }
 
     public string? Mainimagepath { get; set; }
 
     public bool Isactive { get; set; }
+
+    public string IsEnable => Isactive ? "В наличии" : "Отсуствует";
+
+    public int? Manufacturerid { get; set; }
 
     public Bitmap Image => File.Exists($"./Assets/{Mainimagepath}") ? new Bitmap($"./Assets/{Mainimagepath}") : null!;
 
     public SolidColorBrush Color => Isactive ? new SolidColorBrush(Colors.Gray) : new SolidColorBrush(Colors.White);
 
     public int AttachedCount => Attachedproducts.Count;
+
+    public virtual Manufacturer? Manufacturer { get; set; }
 
     public virtual ICollection<Productphoto> Productphotos { get; set; } = new List<Productphoto>();
 

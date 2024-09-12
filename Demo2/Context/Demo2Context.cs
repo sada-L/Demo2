@@ -16,6 +16,8 @@ public partial class Demo2Context : DbContext
     {
     }
 
+    public virtual DbSet<Manufacturer> Manufacturers { get; set; }
+
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<Productphoto> Productphotos { get; set; }
@@ -28,6 +30,21 @@ public partial class Demo2Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Manufacturer>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("pk_manufacturer");
+
+            entity.ToTable("manufacturer");
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .HasColumnName("name");
+            entity.Property(e => e.Startdate).HasColumnName("startdate");
+        });
+
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("pk_product");
@@ -37,16 +54,22 @@ public partial class Demo2Context : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.Cost).HasColumnName("cost");
+            entity.Property(e => e.Cost)
+                .HasColumnType("money")
+                .HasColumnName("cost");
+            entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.Isactive).HasColumnName("isactive");
             entity.Property(e => e.Mainimagepath)
                 .HasMaxLength(1000)
                 .HasColumnName("mainimagepath");
+            entity.Property(e => e.Manufacturerid).HasColumnName("manufacturerid");
             entity.Property(e => e.Title)
                 .HasMaxLength(100)
                 .HasColumnName("title");
-            entity.Property(e => e.Description)
-              .HasColumnName("description");
+
+            entity.HasOne(d => d.Manufacturer).WithMany(p => p.Products)
+                .HasForeignKey(d => d.Manufacturerid)
+                .HasConstraintName("fk_product_manufacturer");
 
             entity.HasMany(d => d.Attachedproducts).WithMany(p => p.Mainproducts)
                 .UsingEntity<Dictionary<string, object>>(
