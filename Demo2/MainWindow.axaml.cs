@@ -19,19 +19,27 @@ namespace Demo2
 
         private void InitList()
         {
+            var list = products;
+
             if (!string.IsNullOrEmpty(SearchTextBox.Text))
             {
                 string[] searchTerms = SearchTextBox.Text.ToLower().Split(' ', System.StringSplitOptions.RemoveEmptyEntries); 
 
-                var list = products.Where(product =>
+                list = list.Where(product =>
                 {
                     string[] productFilds =
                     [
-                        product.Tie
+                        product.Title.ToLower(),
+                        product.Description!.ToLower()
                     ];
 
-                });
+                    return searchTerms.Any(term => productFilds.Any(field => field.Contains(term)));
+                }).ToList();
             }
+            ProductsListBox.ItemsSource = null;
+            ProductsListBox.ItemsSource = list;
         }
+
+        private void TextBox_TextChanged(object? sender, Avalonia.Controls.TextChangedEventArgs e) => InitList();
     }
 }

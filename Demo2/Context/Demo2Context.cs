@@ -45,6 +45,8 @@ public partial class Demo2Context : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(100)
                 .HasColumnName("title");
+            entity.Property(e => e.Description)
+              .HasColumnName("description");
 
             entity.HasMany(d => d.Attachedproducts).WithMany(p => p.Mainproducts)
                 .UsingEntity<Dictionary<string, object>>(

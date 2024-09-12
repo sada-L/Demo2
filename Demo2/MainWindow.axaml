@@ -12,7 +12,8 @@
 				 Grid.Column="0"
 				 Margin="10"
 				 Watermark="Поиск"
-				 Name="SearchTextBox"/>
+				 Name="SearchTextBox"
+				 TextChanged="TextBox_TextChanged"/>
 		
 		<Button Grid.Row="2"
 				Grid.Column="0"

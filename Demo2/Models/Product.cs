@@ -12,6 +12,8 @@ public partial class Product
 
     public string Title { get; set; } = null!;
 
+    public string? Description { get; set; }
+
     public decimal Cost { get; set; }
 
     public string? Mainimagepath { get; set; }
