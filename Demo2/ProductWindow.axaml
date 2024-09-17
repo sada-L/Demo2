@@ -2,13 +2,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
         x:Class="Demo2.ProductWindow"
 		x:CompileBindings="False"
         Title="ProductWindow">
-	<Grid RowDefinitions="*,*,*"
-		  ColumnDefinitions="*,*,*">
-		<StackPanel Spacing="10" Margin="10" Name="ProductPanel">
+	<Grid RowDefinitions="*,*,Auto"
+		  ColumnDefinitions="*,*"
+		  Name="ProductPanel">
+		<StackPanel Spacing="10" Margin="10" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
 			<TextBlock Text="{Binding Id}"/>
 			<TextBox Text="{Binding Title}" Watermark="Название"/>
 			<TextBox Text="{Binding Cost}" Watermark="Цена"/>
@@ -25,20 +26,89 @@
 			<Image Source="{Binding Image}" Height="150" HorizontalAlignment="Left"  Name="Image" />
 			<Button Content="Добавить фото" Click="Button_Click_AddPhoto"/>
 		</StackPanel>
-		
+
 		<ListBox Name="AttachedListBox"
-				 Grid.Row="1"
-				 Grid.Column="2">
+				 Grid.Row="0"
+				 Grid.Column="1"
+				 BorderBrush="Black"
+				 BorderThickness="1"
+				 Margin="10"
+				 DoubleTapped="ListBox_DoubleTapped">
 			<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
 					<WrapPanel/>
 				</ItemsPanelTemplate>
 			</ListBox.ItemsPanel>
+
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<TextBlock Text="{Binding Title}"/>
+					<Border>
+						<Image Source="{Binding Image}" Width="60" Height="100"/>
+						<ToolTip.Tip>
+							<StackPanel>
+								<TextBlock Text="{Binding Title}"/>
+								<TextBlock Text="{Binding Cost}"/>
+							</StackPanel>
+						</ToolTip.Tip>
+					</Border>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		
+		<ListBox Name="ProductListBox"
+				 Grid.Row="1"
+				 Grid.Column="1"
+				 BorderBrush="Black"
+				 BorderThickness="1"
+				 Margin="10"
+				 DoubleTapped="ListBox_DoubleTapped1">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border>
+						<Image Source="{Binding Image}" Width="60" Height="100"/>
+						<ToolTip.Tip>
+							<StackPanel>
+								<TextBlock Text="{Binding Title}"/>
+								<TextBlock Text="{Binding Cost}"/>
+							</StackPanel>
+						</ToolTip.Tip>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<StackPanel Grid.Row="2"
+					Grid.Column="1"
+					Margin="10"
+					VerticalAlignment="Bottom"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal"
+					Spacing="10">
+			<Button Content="Назад"
+					Click="Button_Click_Back"/>
+
+			<Button Content="Сохранить"
+					Click="Button_Click_Save"/>
+		</StackPanel>
+
+		<StackPanel Margin="10"
+					Grid.Row="2"
+					Grid.Column="1"
+					VerticalAlignment="Bottom"
+					HorizontalAlignment="Left"
+					Orientation="Horizontal"
+					Spacing="5">
+			<Button Content="Добавить"
+					Click="Button_Click_Add"/>
+
+			<Button Content="Удалить"
+					Click="Button_Click_Delete"/>
+		</StackPanel>
 	</Grid>
 </Window>

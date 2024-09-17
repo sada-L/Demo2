@@ -13,6 +13,7 @@ public partial class Product
 
     public string Title { get; set; } = null!;
 
+    [Range(0, double.MaxValue, ErrorMessage = "Цена не может быть отрицательной")]
     public decimal Cost { get; set; }
 
     public string? Description { get; set; }

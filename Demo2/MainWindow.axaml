@@ -61,10 +61,17 @@
 					Click="Button_Click_Add"/>
 			<Button Content="Редактировать"
 					Click="Button_Click_Edit"/>
-			<Button Content="История"
+			<Button Content="Удалить"
 					Margin="10"
-					Click="Button_Click_History"/>
+					Click="Button_Click_Delete"/>
 		</StackPanel>
+
+		<Button Content="История"
+				Margin="10"
+				Grid.Row="2"
+				Grid.Column="2"
+				HorizontalAlignment="Right"
+				Click="Button_Click_History"/>
 
 		<ListBox Name="ProductsListBox"
 				 Grid.Row="1"
@@ -87,26 +94,32 @@
 							BorderBrush="Black"
 							BorderThickness="1"
 							Background="{Binding Color}">
-						<StackPanel  Spacing="1">
-							<Image Source="{Binding Image}" HorizontalAlignment="Stretch" Height="230"/>
+						<DockPanel>
+							<StackPanel Spacing="5" DockPanel.Dock="Bottom">
+								<Border Height="40">
+									<ScrollViewer>
+										<TextBlock TextWrapping="Wrap" >
+											<TextBlock.Text>
+												<MultiBinding StringFormat="{}{0} ({1})">
+													<Binding Path="Title"/>
+													<Binding Path="AttachedCount"/>
+												</MultiBinding>
+											</TextBlock.Text>
+										</TextBlock>
+									</ScrollViewer>
+								</Border>
 
-							<Border Height="40">
-								<ScrollViewer>
-									<TextBlock TextWrapping="Wrap" >
-										<TextBlock.Text>
-											<MultiBinding StringFormat="{}{0} ({1})">
-												<Binding Path="Title"/>
-												<Binding Path="AttachedCount"/>
-											</MultiBinding>
-										</TextBlock.Text>
-									</TextBlock>
-								</ScrollViewer>
-							</Border>
+								<TextBlock  Text="{Binding Cost}" FontSize="18"/>
 
-							<TextBlock  Text="{Binding Cost}" FontSize="18"/>
-
-							<TextBlock Text="{Binding IsEnable}"  VerticalAlignment="Center"/>
-						</StackPanel>
+								<TextBlock Text="{Binding IsEnable}"  VerticalAlignment="Center"/>
+							</StackPanel>
+							<Grid DockPanel.Dock="Top">
+								<Image Source="{Binding Image}" HorizontalAlignment="Stretch" Height="230"/>
+								<StackPanel>
+									
+								</StackPanel>
+							</Grid>
+						</DockPanel>
 					</Border>
 				</DataTemplate>
 			</ListBox.ItemTemplate>

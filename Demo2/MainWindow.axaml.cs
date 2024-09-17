@@ -42,7 +42,7 @@ namespace Demo2
 
             if (!string.IsNullOrEmpty(SearchTextBox.Text))
             {
-                string[] searchTerms = SearchTextBox.Text.ToLower().Split(' ', System.StringSplitOptions.RemoveEmptyEntries); 
+                string[] searchTerms = SearchTextBox.Text.ToLower().Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
 
                 list = list.Where(product =>
                 {
@@ -53,8 +53,19 @@ namespace Demo2
                     ];
 
                     return searchTerms.Any(term => productFilds.Any(field => field.Contains(term)));
+                })
+                .OrderByDescending(product =>
+                {
+                    string[] productFilds =
+                    [
+                        product.Title.ToLower(),
+                        product.Description!.ToLower()
+                    ];
+
+                    return searchTerms.Any(term => productFilds.Any(field => field.Contains(term)));
                 }).ToList();
             }
+            
             CurrentTextBlock.Text = list.Count.ToString();
             ProductsListBox.ItemsSource = null;
             ProductsListBox.ItemsSource = list;
@@ -76,9 +87,14 @@ namespace Demo2
 
         private void Button_Click_History(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            HistoryWindow historyWindow = new HistoryWindow((Product)ProductsListBox.SelectedItem!);
-            historyWindow.Show();
-            Close();
+            var product = ProductsListBox.SelectedItem as Product;
+
+            if (product != null)
+            {
+                HistoryWindow historyWindow = new HistoryWindow();
+                historyWindow.Show();
+                Close();
+            }
         }
 
         private void Button_Click_Add(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -90,9 +106,25 @@ namespace Demo2
 
         private void Button_Click_Edit(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            ProductWindow productWindow = new ProductWindow((Product)ProductsListBox.SelectedItem!);
-            productWindow.Show();
-            Close();
+            var product = ProductsListBox.SelectedItem as Product;
+
+            if (product != null)
+            {
+                ProductWindow productWindow = new ProductWindow(product);
+                productWindow.Show();
+                Close();
+            }
         }
+        private void Button_Click_Delete(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            var product = ProductsListBox.SelectedItem as Product;
+
+            Helper.DataBase.Products.Remove(product!);
+            Helper.DataBase.SaveChanges();
+
+            products = Helper.DataBase.Products.Include(x => x.Attachedproducts).ToList();
+            InitList();
+        }
+        
     }
 }
